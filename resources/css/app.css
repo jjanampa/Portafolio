@@ -1,0 +1,78 @@
+/*
+ |--------------------------------------------------------------------------
+ | TailwindCSS Directives
+ |--------------------------------------------------------------------------
+ |
+ | Import TailwindCSS directives and swipe out at build-time with all of
+ | the styles it generates based on your configured design system.
+ |
+ | Please check this link for more details:
+ | https://tailwindcss.com/docs/installation#include-tailwind-in-your-css
+ |
+ */
+@import "./_tailwind.css";
+
+/*
+ |--------------------------------------------------------------------------
+ | Colors
+ |--------------------------------------------------------------------------
+ |
+ | Import all fonts used in the template, the font configuration can be
+ | seen in "tailwind.config.js".
+ |
+ | Please check this link for more details:
+ | https://tailwindcss.com/docs/theme
+ |
+ */
+@import "./_colors.css";
+
+/*
+ |--------------------------------------------------------------------------
+ | Fonts
+ |--------------------------------------------------------------------------
+ |
+ | Import all fonts used in the template, the font configuration can be
+ | seen in "tailwind.config.js".
+ |
+ | Please check this link for more details:
+ | https://tailwindcss.com/docs/theme
+ |
+ */
+
+@import "./fonts/_roboto.css";
+
+/*
+ |--------------------------------------------------------------------------
+ | 3rd Party Libraries
+ |--------------------------------------------------------------------------
+ |
+ | Import 3rd party library CSS/SASS files.
+ |
+ */
+
+
+/*
+   |--------------------------------------------------------------------------
+   | Components
+   |--------------------------------------------------------------------------
+   |
+   | Import CSS components.
+   |
+   */
+@import "./components/_global.css";
+@import "./components/_dropdown.css";
+@import "./components/_box.css";
+@import "./components/_btn.css";
+@import "./components/_image-fit.css";
+@import "./components/_breadcrumb.css";
+@import "./components/_intro.css";
+@import "./components/_form-check.css";
+@import "./components/_form-control.css";
+@import "./components/_form-label.css";
+@import "./components/_form-select.css";
+@import "./components/_form-help.css";
+@import "./components/_form-reset.css";
+@import "./components/_input-group.css";
+@import "./components/_sidebar.css";
+
+
