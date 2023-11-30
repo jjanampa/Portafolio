@@ -27,3 +27,13 @@ RUN pecl install redis && docker-php-ext-enable redis
 
 # Instalar composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# añadir usuario para la aplicacion laravel
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
+
+# copiar los permisos del directorio de la aplicación
+COPY --chown=www:www . /var/www
+
+# cambiar usuario actual a www
+USER www
