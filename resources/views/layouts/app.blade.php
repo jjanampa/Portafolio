@@ -40,14 +40,6 @@
 
         <!-- BEGIN: Pages, layouts, components JS Assets-->
         @stack('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                window.addEventListener('closeModal', event => {
-                    let modals = FlowbiteInstances.getInstances('Modal');
-                    Object.values(modals).forEach(modal => modal.hide());
-                })
-            });
-        </script>
         <!-- END: Pages, layouts, components JS Assets-->
     </body>
 </html>

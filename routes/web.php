@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +19,16 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::post('/upload-image', function (Request $request) {
+        $fileName = $request->file('upload')->store('projects', 'public');
+        $url = \Illuminate\Support\Facades\Storage::url($fileName);
+        return response()->json(['fileName' => $fileName, 'uploaded'=> 1, 'url' => $url]);
+    })->name('upload.image');
+
     Route::get('projects', \App\Livewire\Projects\Index::class)->name('projects');
 });

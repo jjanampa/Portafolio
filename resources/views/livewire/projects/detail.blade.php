@@ -1,46 +1,93 @@
 <div>
-    <div wire:ignore.self id="modal-{{ $this->getId() }}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative w-full max-w-2xl max-h-full">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <!-- Modal header -->
-                @if($project)
-                    <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                            {{ $project->name }}
-                        </h3>
-                        <button wire:click="$dispatch('closeModal')" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="modal-body py-1 px-2 flex flex-grow overflow-auto">
+    <x-dialog-modal wire:model="openModal">
+        <x-slot name="title">
+            {{ __('Project') }}
+        </x-slot>
 
-                    </div>
-                @endif
-                <!-- Modal footer -->
-                <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button class="btn btn-outline-secondary ml-auto" wire:click="$dispatch('closeModal')"> {{ __('Cancel') }}</button>
-                    <button class="btn btn-primary" wire:click="save">{{ __('Save') }}</button>
-                </div>
+        <x-slot name="content">
+            <div class="">
+                <label class="form-label" for="name">{{ __('Name') }} <span class="text-danger">*</span></label>
+                <input id="name" type="text" class="form-control" wire:model="form.name">
+                <x-input-error for="form.name" class="mt-1" />
             </div>
-        </div>
-    </div>
+            <div class="mt-3">
+                <label class="form-label" for="description">{{ __('Description') }} <span class="text-danger">*</span></label>
+                <div wire:ignore>
+                    <textarea id="description" rows="5" class="form-control h-[250px]"></textarea>
+                </div>
+                <x-input-error for="form.description" class="mt-1" />
+            </div>
+            <div class="mt-3">
+                <label class="form-label" for="status">{{ __('Publish') }} <span class="text-danger">*</span></label>
+                <div class="form-check form-switch">
+                    <input id="status" wire:model="form.status"  class="form-check-input" type="checkbox" >
+                </div>
+                <x-input-error for="form.status" class="mt-1" />
+            </div>
+            <div class="mt-3">
+                <label class="form-label" for="image">{{ __('Image') }}</label>
+                <div class="w-full border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                    <div class="h-44 relative image-fit cursor-pointer zoom-in mx-auto">
+                        @if ($form->image)
+                            <img class="rounded-md" src="{{ $form->image->temporaryUrl() }}">
+                        @elseif ($project->image)
+                            <img class="rounded-md" src="{{ $project->image }}" >
+                        @else
+                            <img src="https://via.placeholder.com/600x300?text=600x300" class="rounded-md">
+                        @endif
+                    </div>
+                    <div class="mx-auto cursor-pointer relative mt-5">
+                        <button type="button" class="btn btn-primary w-full">{{ __('Change Image') }}</button>
+                        <input accept="image/*" wire:model="form.image" type="file" class="w-full h-full top-0 left-0 absolute opacity-0">
+                        <div wire:loading wire:target="form.image">Uploading...</div>
+                    </div>
+                </div>
+                <x-input-error for="form.image" class="mt-1" />
+            </div>
+        </x-slot>
 
+        <x-slot name="footer">
+            <x-secondary-button wire:click="$toggle('openModal')" wire:loading.attr="disabled">
+                {{ __('Cancel') }}
+            </x-secondary-button>
+
+            <x-button class="ml-2" wire:click="save" wire:loading.attr="disabled">
+                {{ __('Save') }}
+            </x-button>
+        </x-slot>
+    </x-dialog-modal>
+
+    @assets
+        <script src="{{ asset('build/ckeditor-classic/ckeditor.js') }}"></script>
+    @endassets
     @pushOnce('scripts')
         <script>
-            document.addEventListener('livewire:navigated', () => {
-                const $targetEl = document.getElementById('modal-{{ $this->getId() }}');
-                if (!$targetEl) return;
-
-                let modal = new Modal($targetEl, {closable: false});
+            document.addEventListener('DOMContentLoaded', () => {
+                var editor = ClassicEditor.create(document.querySelector('#description'), {
+                    mediaEmbed:{
+                        previewsInData:true
+                    },
+                    ckfinder: {
+                        uploadUrl: '{{route('upload.image').'?_token='.csrf_token()}}',
+                    }
+                });
                 window.addEventListener('openModal-{{ $this->getId() }}', event => {
-                    modal.show();
+                    editor
+                        .then(function(editor){
+                            if (event.detail.project.description) {
+                                editor.setData(event.detail.project.description);
+                            }
+
+                            editor.model.document.on('change:data', () => {
+                                console.log(editor.getData());
+                            @this.set('form.description', editor.getData());
+                            })
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
                 })
-            });
+            })
         </script>
     @endPushOnce
 </div>

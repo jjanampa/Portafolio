@@ -5,7 +5,7 @@
             {{ __('My projects') }}
         </h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-            <button class="btn btn-sm btn-primary shadow-md mr-2">
+            <button class="btn btn-sm btn-primary shadow-md mr-2" wire:click="$dispatchTo('projects.detail', 'show')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="plus" data-lucide="plus" class="lucide lucide-plus w-4 h-4"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 {{ __('Add New') }}
             </button>
@@ -39,7 +39,8 @@
                                 </button>
                             </li>
                             <li>
-                                <button  class="dropdown-item text-danger" wire:click="$dispatchTo('projects.detail', 'delete', { project: {{ $project->id }} } )">
+                                <button wire:click="$dispatchTo('projects.detail', 'delete', { project: {{ $project->id }} })"
+                                        wire:confirm="{{ __('Are you sure you want to delete this project?') }}" class="dropdown-item text-danger">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="trash" data-lucide="trash" class="lucide lucide-trash w-4 h-4 mr-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path></svg>
                                     {{ __('Delete') }}
                                 </button>
@@ -50,10 +51,7 @@
             </div>
             <div class="p-5">
                 <div class="h-40 2xl:h-56 image-fit">
-                    <img alt="Midone - HTML Admin Template" class="rounded-md" src="{{ $project->image }}">
-                </div>
-                <div class="text-slate-600 dark:text-slate-500 mt-2">
-                    {{ str($project->description)->limit(120)  }}
+                    <img class="rounded-md" src="{{ $project->image }}" alt="{{ $project->name }}">
                 </div>
             </div>
 

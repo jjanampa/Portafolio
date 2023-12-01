@@ -13,7 +13,8 @@ class Index extends Component
     #[On('render')]
     public function render()
     {
-        $projects = auth()->user()->projects()->latest()->paginate(3);
+        $projects = auth()->user()->projects()->latest()->paginate();
+
         return view('livewire.projects.index', compact('projects'))
             ->title(__('My projects'))
             ->layoutData([
