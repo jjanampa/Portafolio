@@ -70,6 +70,7 @@ Start Application
 ```shell
 docker compose exec app sh -c 'composer install'
 docker compose exec app sh -c 'php artisan migrate:refresh --seed'
+docker compose exec app sh -c 'php artisan storage:link'
 ```
 
 **Without Docker**
@@ -81,14 +82,11 @@ docker compose exec app sh -c 'php artisan migrate:refresh --seed'
   - Create database in mysql 
   - In .env config access database
 
-- Install dependencies
+- Install
   ```
     composer install
-  ```
-  
-- Migrate
-  ```
     php artisan migrate
+    php artisan storage:link
   ```
 
 ### The Application starts at http://localhost/
