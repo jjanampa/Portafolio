@@ -30,7 +30,7 @@
                     <div class="h-44 relative image-fit cursor-pointer zoom-in mx-auto">
                         @if ($form->image)
                             <img class="rounded-md" src="{{ $form->image->temporaryUrl() }}">
-                        @elseif ($project->image)
+                        @elseif ($project && $project->image)
                             <img class="rounded-md" src="{{ $project->image }}" >
                         @else
                             <img src="https://via.placeholder.com/600x300?text=600x300" class="rounded-md">
@@ -58,7 +58,7 @@
     </x-dialog-modal>
 
     @assets
-        <script src="{{ asset('build/ckeditor-classic/ckeditor.js') }}"></script>
+    <script src="{{ asset('build/ckeditor-classic/ckeditor.js') }}"></script>
     @endassets
     @pushOnce('scripts')
         <script>
@@ -74,10 +74,8 @@
                 window.addEventListener('openModal-{{ $this->getId() }}', event => {
                     editor
                         .then(function(editor){
-                            if (event.detail.project.description) {
-                                editor.setData(event.detail.project.description);
-                            }
-
+                            let data = (event.detail.project.description) ? event.detail.project.description : '';
+                            editor.setData(data);
                             editor.model.document.on('change:data', () => {
                                 console.log(editor.getData());
                             @this.set('form.description', editor.getData());

@@ -14,9 +14,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+//Route::get('/', function () {
+//    return view('welcome');
+//})->name('home');
+Route::get('/', \App\Livewire\Public\Pages\Home::class)->name('home');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
 
@@ -30,5 +31,5 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         return response()->json(['fileName' => $fileName, 'uploaded'=> 1, 'url' => $url]);
     })->name('upload.image');
 
-    Route::get('projects', \App\Livewire\Projects\Index::class)->name('projects');
+    Route::get('projects', \App\Livewire\Dashboard\Projects\Index::class)->name('projects');
 });

@@ -15,7 +15,7 @@ class ProjectForm extends Form
     #[Validate('required|min:5')]
     public $name = '';
 
-    #[Validate('required|min:5')]
+    #[Validate('required|min:5|max:255')]
     public $description = '';
 
     public $status = true;

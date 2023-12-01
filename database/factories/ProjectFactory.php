@@ -18,7 +18,7 @@ class ProjectFactory extends Factory
     {
         return [
             'name' => $this->faker->company,
-            'description' => $this->faker->text(500),
+            'description' => $this->faker->text(250),
             'image' => $this->faker->imageUrl(300, 300, null, true),
             'slug' => $this->faker->slug,
         ];

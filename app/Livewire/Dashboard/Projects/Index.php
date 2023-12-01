@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Projects;
+namespace App\Livewire\Dashboard\Projects;
 
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -15,7 +15,7 @@ class Index extends Component
     {
         $projects = auth()->user()->projects()->latest()->paginate();
 
-        return view('livewire.projects.index', compact('projects'))
+        return view('livewire.dashboard.projects.index', compact('projects'))
             ->title(__('My projects'))
             ->layoutData([
                 'breadcrumb' => [
