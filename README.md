@@ -48,19 +48,48 @@ git config core.fileMode false
 
 ### Raise project (with Docker, port 80 must be free)
 
-Build and run Docker containers
-
-    docker compose up -d --build
-
-Start Application
-
+Copy Configuration
 ```shell
-docker compose exec app sh -c 'cp .env.example .env'
-docker compose exec app sh -c 'composer install'
-docker compose exec app sh -c 'php artisan key:generate && php artisan migrate && php artisan db:seed'
+cp .env.example .env
+```
+
+Build frontend
+```shell
 npm install && npm run build
 ```
 
+**With Docker**
+
+Build and run Docker containers
+```shell
+docker compose up -d --build
+```
+    
+Start Application
+
+```shell
+docker compose exec app sh -c 'composer install'
+docker compose exec app sh -c 'php artisan key:generate && php artisan migrate && php artisan db:seed'
+```
+
+**Without Docker**
+
+- Configure
+  - Install php 8.2
+  - Install apache
+  - Install mysql 8
+  - Create database in mysql 
+  - In .env config access database
+
+- Install dependencies
+  ```
+    composer install
+  ```
+  
+- Migrate
+  ```
+    php artisan migrate
+  ```
 
 The Application starts at http://localhost/
 
