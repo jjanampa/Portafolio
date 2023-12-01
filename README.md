@@ -53,11 +53,6 @@ Copy Configuration
 cp .env.example .env
 ```
 
-Build frontend
-```shell
-npm install && npm run build
-```
-
 **With Docker**
 
 Build and run Docker containers
@@ -88,6 +83,11 @@ docker compose exec app sh -c 'php artisan storage:link'
     php artisan migrate
     php artisan storage:link
   ```
+
+**Build frontend**
+```shell
+npm install && npm run build
+```
 
 ### The Application starts at http://localhost/
 ### Dashboard http://localhost/dashboard
