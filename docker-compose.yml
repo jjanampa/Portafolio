@@ -23,10 +23,8 @@ services:
             - backend-net
         command: --default-authentication-plugin=mysql_native_password
         environment:
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_DATABASE: '${DB_DATABASE}'
-            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: app
 
     redis:
         image: 'redis:alpine'
@@ -43,8 +41,8 @@ services:
             - "8080:80"
         environment:
             PMA_HOST: db
-            PMA_USER: '${DB_USERNAME}'
-            PMA_PASSWORD: '${DB_PASSWORD}'
+            PMA_USER: root
+            PMA_PASSWORD: root
         networks:
             - backend-net
 

@@ -69,7 +69,7 @@ Start Application
 
 ```shell
 docker compose exec app sh -c 'composer install'
-docker compose exec app sh -c 'php artisan key:generate && php artisan migrate && php artisan db:seed'
+docker compose exec app sh -c 'php artisan migrate:refresh --seed'
 ```
 
 **Without Docker**
@@ -91,7 +91,10 @@ docker compose exec app sh -c 'php artisan key:generate && php artisan migrate &
     php artisan migrate
   ```
 
-The Application starts at http://localhost/
+### The Application starts at http://localhost/
+### Dashboard http://localhost/dashboard
+    - Username: test@test.com
+    - Password: password
 
 ## _Nota_:
 
