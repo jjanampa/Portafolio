@@ -65,7 +65,7 @@ Build and run Docker containers
 docker compose up -d --build
 ```
     
-Start Application
+Start Application (wait 30 seconds)
 
 ```shell
 docker compose exec app sh -c 'composer install'
