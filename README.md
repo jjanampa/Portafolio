@@ -9,14 +9,15 @@ This repository contains an installation configuration for using Docker to creat
 #### Main packages:
 
 _Backend_:
-
-- [Livewire](https://github.com/livewire/livewire)
-- [Laravel Jetstream](https://jetstream.laravel.com/introduction.html)
+- php 8.2
+- Laravel 10
+- [Livewire v3](https://github.com/livewire/livewire)
+- [Laravel Jetstream v4](https://jetstream.laravel.com/introduction.html)
 
 _Frontend_:
 
 -   Alpine
--   Tailwindcss
+-   [Tailwindcss v3](https://tailwindcss.com/docs/width)
 -   [Flowbite](https://flowbite.com/)
 
 ---
@@ -118,3 +119,5 @@ docker compose stop && docker compose up -d --build
 ```
 
 Resource accesses are obtained from docker-compose.yml
+
+-   phpmyadmin : (http://localhost:8080)
